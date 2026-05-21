@@ -30,12 +30,14 @@ function buildFacebookMessage(item) {
     item.content ||
     '';
 
-  const link = item.url ? `\n\nLer notícia completa: ${item.url}` : '';
-
   return [
     item.title,
     description,
-  ].filter(Boolean).join('\n\n').concat(link).slice(0, 60000) || 'Nova notícia';
+    item.url ? `🔗 Ler notícia completa:\n${item.url}` : '',
+  ]
+    .filter(Boolean)
+    .join('\n\n')
+    .slice(0, 60000);
 }
 
 async function publishToFacebook(item) {
