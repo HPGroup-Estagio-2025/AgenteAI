@@ -4,9 +4,9 @@ import { createState } from '@/src/lib/social';
 const CONFIGS = {
   facebook: {
     authUrl: 'https://www.facebook.com/v19.0/dialog/oauth',
-    scope: 'pages_show_list,pages_manage_posts,pages_read_engagement,instagram_basic,instagram_content_publish',
+    scope: 'pages_show_list,pages_manage_posts,pages_read_engagement,pages_manage_metadata',
     clientIdEnv: 'FACEBOOK_APP_ID',
-  },
+},
   instagram: {
     authUrl: 'https://www.facebook.com/v19.0/dialog/oauth',
     scope: 'pages_show_list,instagram_basic,instagram_content_publish,pages_manage_posts,pages_read_engagement',
