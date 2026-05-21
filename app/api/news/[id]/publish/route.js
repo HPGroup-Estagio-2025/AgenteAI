@@ -23,7 +23,19 @@ function getFacebookPage(account) {
 }
 
 function buildFacebookMessage(item) {
-  return [item.title, item.content].filter(Boolean).join('\n\n').slice(0, 60000) || 'Nova noticia';
+  const description =
+    item.description ||
+    item.summary ||
+    item.excerpt ||
+    item.content ||
+    '';
+
+  const link = item.url ? `\n\nLer notícia completa: ${item.url}` : '';
+
+  return [
+    item.title,
+    description,
+  ].filter(Boolean).join('\n\n').concat(link).slice(0, 60000) || 'Nova notícia';
 }
 
 async function publishToFacebook(item) {
