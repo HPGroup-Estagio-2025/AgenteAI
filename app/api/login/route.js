@@ -21,6 +21,10 @@ async function getAdminHash() {
   return g._adminHash;
 }
 
+export async function GET() {
+  return NextResponse.json({ ok: true, route: 'login api working' });
+}
+
 export async function POST(request) {
   const body = await request.json().catch(() => ({}));
   const { username, password } = body;
