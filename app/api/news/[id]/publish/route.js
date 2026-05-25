@@ -92,13 +92,10 @@ export async function POST(request, { params }) {
   try {
     const socialResults = [];
     if (socialPlatforms.includes('facebook')) {
-      if (!getAccount('facebook')) {
-        return NextResponse.json({ error: 'Facebook ainda nao esta conectado em Redes Sociais' }, { status: 409 });
-      }
-      if (FACEBOOK_DIRECT_PUBLISH) {
-        socialResults.push(await publishToFacebook(item));
-      }
-    }
+  if (FACEBOOK_DIRECT_PUBLISH) {
+    socialResults.push(await publishToFacebook(item));
+  }
+}
 
     const updated = await updateNews(id, { status: 'published', processedAt: new Date().toISOString(), processedBy: user.username });
     await notifyN8n(N8N_PUBLISH_WEBHOOK, {
