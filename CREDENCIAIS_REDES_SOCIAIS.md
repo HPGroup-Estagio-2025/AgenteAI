@@ -22,7 +22,7 @@ FACEBOOK_DIRECT_PUBLISH=false
 No painel da Meta/Facebook, adiciona este redirect URI:
 
 ```text
-{NEXT_PUBLIC_APP_URL}/api/social/callback/facebook
+np
 ```
 
 Se quiseres publicar diretamente na pagina do Facebook a partir da app, define:

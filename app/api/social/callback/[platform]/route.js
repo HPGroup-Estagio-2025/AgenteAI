@@ -108,18 +108,21 @@ export async function GET(request, { params }) {
 
     const profile = await config.getProfile(accessToken);
 
-    setAccount(platform, {
+        setAccount(platform, {
       platform,
       accessToken,
       name: profile.name,
       email: profile.email,
       picture: profile.picture,
       pages: profile.pages || [],
-      expiresAt: tokenData.expires_in ? new Date(Date.now() + tokenData.expires_in * 1000).toISOString() : null,
+      expiresAt: tokenData.expires_in
+        ? new Date(Date.now() + tokenData.expires_in * 1000).toISOString()
+        : null,
     });
 
     return redirect(`/social?connected=${platform}`);
-  } catch {
+  } catch (err) {
+    console.error('[social callback]', platform, err);
     return redirect('/social?error=connection_failed');
   }
 }
