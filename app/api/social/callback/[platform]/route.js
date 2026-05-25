@@ -75,10 +75,12 @@ export async function GET(request, { params }) {
   if (oauthError) return redirect(`/social?error=${encodeURIComponent(oauthError)}`);
   if (!code || !state) return redirect('/social?error=missing_params');
 
-  const stateData = consumeState(state);
-  if (!stateData || stateData.platform !== platform) {
-    return redirect('/social?error=invalid_state');
-  }
+  // TEMPORÁRIO PARA VERCEL:
+// O state em memória perde-se entre serverless functions.
+const stateData = consumeState(state);
+if (stateData && stateData.platform !== platform) {
+  return redirect('/social?error=invalid_state');
+}
 
   const clientId = process.env[config.clientIdEnv];
   const clientSecret = process.env[config.clientSecretEnv];
