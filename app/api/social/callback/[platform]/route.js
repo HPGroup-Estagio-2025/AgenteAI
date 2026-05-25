@@ -103,8 +103,19 @@ export async function GET(request, { params }) {
     });
 
     const tokenData = await tokenRes.json();
-    const accessToken = tokenData.access_token;
-    if (!accessToken) return redirect('/social?error=token_exchange_failed');
+
+      if (!tokenRes.ok || !tokenData.access_token) {
+        console.error('[social token exchange failed]', {
+         platform,
+         status: tokenRes.status,
+         tokenData,
+         redirectUri,
+        });
+
+  return redirect('/social?error=token_exchange_failed');
+}
+
+const accessToken = tokenData.access_token;
 
     const profile = await config.getProfile(accessToken);
 
@@ -121,7 +132,11 @@ export async function GET(request, { params }) {
     });
 
     return redirect(`/social?connected=${platform}`);
-  } catch (err) {
+    } catch (err) {
+    if (err?.digest?.startsWith('NEXT_REDIRECT')) {
+      throw err;
+    }
+
     console.error('[social callback]', platform, err);
     return redirect('/social?error=connection_failed');
   }
